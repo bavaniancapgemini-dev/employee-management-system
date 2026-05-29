@@ -16,3 +16,19 @@ def highest_salary():
     connection.close()
 
     return data
+
+def average_salary():
+
+    connection = sqlite3.connect("employees.db")
+
+    cursor = connection.cursor()
+
+    cursor.execute(
+        "SELECT AVG(salary) FROM employees"
+    )
+
+    data = cursor.fetchone()
+
+    connection.close()
+
+    return data

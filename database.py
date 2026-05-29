@@ -51,3 +51,50 @@ def show_employees():
     connection.close()
 
     return data
+
+def search_employee(name):
+
+    connection = sqlite3.connect("employees.db")
+
+    cursor = connection.cursor()
+
+    cursor.execute(
+        "SELECT * FROM employees WHERE name=?",
+        (name,)
+    )
+
+    data = cursor.fetchall()
+
+    connection.close()
+
+    return data
+
+def delete_employee(employee_id):
+
+    connection = sqlite3.connect("employees.db")
+
+    cursor = connection.cursor()
+
+    cursor.execute(
+        "DELETE FROM employees WHERE id=?",
+        (employee_id,)
+    )
+
+    connection.commit()
+
+    connection.close()
+
+def update_salary(employee_id, new_salary):
+
+    connection = sqlite3.connect("employees.db")
+
+    cursor = connection.cursor()
+
+    cursor.execute(
+        "UPDATE employees SET salary=? WHERE id=?",
+        (new_salary, employee_id)
+    )
+
+    connection.commit()
+
+    connection.close()
