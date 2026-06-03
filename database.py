@@ -13,7 +13,8 @@ def create_table():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         department TEXT,
-        salary INTEGER
+        salary INTEGER,
+        rating INTEGER
     )
     """)
 
@@ -22,15 +23,15 @@ def create_table():
     connection.close()
 
 
-def add_employee(name, department, salary):
+def add_employee(name, department, salary, rating):
 
     connection = sqlite3.connect("employees.db")
 
     cursor = connection.cursor()
 
     cursor.execute(
-        "INSERT INTO employees(name, department, salary) VALUES (?, ?, ?)",
-        (name, department, salary)
+        "INSERT INTO employees(name, department, salary, rating) VALUES (?, ?, ?, ?)",
+        (name, department, salary, rating)
     )
 
     connection.commit()
