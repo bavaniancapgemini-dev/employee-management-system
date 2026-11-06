@@ -1,3 +1,4 @@
+
 from database import (
     create_table,
     add_employee,
@@ -27,20 +28,37 @@ from reports import (
 )
 
 from attendance import (
+    create_attendance_table,
     mark_attendance,
     view_attendance
 )
 
+from auth import (
+    create_auth_table,
+    login_user,
+    create_account,
+    change_account_password
+)
+
+from performance import create_performance_table
+
+from roles import open_role_dashboard
+
 from backup import export_employees
-
 from utils import line
+from getpass import getpass
 
 
+# INITIALIZE DATABASE
 
 create_table()
-
+create_auth_table()
 create_payroll_table()
+create_attendance_table()
+create_performance_table()
 
+
+# MAIN LOGIN SYSTEM
 
 while True:
 
@@ -50,300 +68,40 @@ while True:
 
     line()
 
-    print("1. Add Employee")
-    print("2. View Employees")
-    print("3. Highest Salary")
-    print("4. Search Employee")
-    print("5. Delete Employee")
-    print("6. Update Salary")
-    print("7. Average Salary")
-    print("8. Department Report")
-    print("9. Mark Attendance")
-    print("10. View Attendance")
-    print("11. Export JSON")
-    print("12. Top Performer")
-    print("13. Dashboard")
-    print("14. Apply for Leave")
-    print("15. View Leave Requests")
-    print("16. Approve / Reject Leave")
-    print("17. Employee Leave History")
-    print("18. Generate Payroll")
-    print("19. View Payroll")
-    print("20. Update Payment Status")
-    print("21. Exit")
+    print("1. Login")
+    print("2. Exit")
 
     choice = input("Choose: ")
 
     if choice == "1":
 
-        name = input("Employee Name: ")
+        print("\n========== LOGIN ==========")
 
-        department = input("Department: ")
+        username = input("Username: ").strip()
+        password = getpass("Password: ")
 
-        salary = int(input("Salary: "))
+        user = login_user(username, password)
 
-        rating = int(input("Performance Rating (1-10): "))
+        if user:
 
-        add_employee(name, department, salary, rating)
+            print("\nLogin Successful!")
+            print("Welcome:", user["username"])
+            print("Role:", user["role"])
 
-        print("Employee Added")
+            open_role_dashboard(user)
+
+            print("\nLogged out successfully.")
+
+        else:
+
+            print("\nInvalid username or password.")
+            print("Your account may also be inactive.")
 
     elif choice == "2":
 
-        employees = show_employees()
-
-        for employee in employees:
-
-            print(employee)
-
-    elif choice == "3":
-
-        employee = highest_salary()
-
-        print("\nHighest Salary Employee:")
-        print(employee)
-
-    elif choice == "4":
-
-        name = input("Enter employee name: ")
-
-        result = search_employee(name)
-
-        for employee in result:
-
-            print(employee)
-
-    elif choice == "5":
-
-        employee_id = int(input("Enter employee ID: "))
-
-        delete_employee(employee_id)
-
-        print("Employee Deleted")
-
-    elif choice == "6":
-
-        employee_id = int(input("Enter employee ID: "))
-
-        new_salary = int(input("Enter new salary: "))
-
-        update_salary(employee_id, new_salary)
-
-        print("Salary Updated")
-
-    elif choice == "7":
-
-        avg = average_salary()
-
-        print("Average Salary:", avg[0])
-
-    elif choice == "8":
-
-        report = department_report()
-
-        for department in report:
-
-            print(department)
-
-    elif choice == "9":
-
-        employee_id = int(input("Enter employee ID: "))
-
-        mark_attendance(employee_id)
-
-        print("Attendance Marked")
-
-    elif choice == "10":
-
-        records = view_attendance()
-
-        for record in records:
-
-            print(record)
-
-    elif choice == "11":
-
-        export_employees()
-
-        print("JSON Export Complete")
-
-    elif choice == "12":
-
-        employee = top_performer()
-
-        print(employee)
-
-    elif choice == "13":
-
-        print("Total Employees:", total_employees())
-
-        print("Average Salary:", average_salary())
-
-        print("Top Performer:", top_performer())
-
-    elif choice == "14":
-
-        print("\n--- APPLY FOR LEAVE ---")
-
-        employee_id = int(input("Employee ID: "))
-        leave_type = input("Leave Type (Casual/Sick/Earned): ")
-        start_date = input("Start Date (YYYY-MM-DD): ")
-        end_date = input("End Date (YYYY-MM-DD): ")
-        reason = input("Reason: ")
-
-        employees = show_employees()
-
-        if any(employee[0] == employee_id for employee in employees):
-
-            apply_leave(
-                employee_id,
-                leave_type,
-                start_date,
-                end_date,
-                reason
-            )
-
-            print("Leave Application Submitted!")
-
-        else:
-
-            print("Employee ID not found.")
-
-    elif choice == "15":
-
-        print("\n--- ALL LEAVE REQUESTS ---")
-
-        requests = view_leave_requests()
-
-        if requests:
-
-            for request in requests:
-                print(request)
-
-        else:
-
-            print("No leave requests found.")
-
-    elif choice == "16":
-
-        print("\n--- APPROVE / REJECT LEAVE ---")
-
-        leave_id = int(input("Enter Leave Request ID: "))
-
-        status = input("Enter status (Approved/Rejected): ").strip().title()
-
-        if status in ["Approved", "Rejected"]:
-
-            update_leave_status(leave_id, status)
-
-            print("Leave Status Updated!")
-
-        else:
-
-            print("Invalid status.")
-
-    elif choice == "17":
-
-        print("\n--- EMPLOYEE LEAVE HISTORY ---")
-
-        employee_id = int(input("Enter Employee ID: "))
-
-        history = employee_leave_history(employee_id)
-
-        if history:
-
-            for record in history:
-                print(record)
-
-        else:
-
-            print("No leave history found.")
-            
-    elif choice == "18":
-
-        print("\n--- GENERATE PAYROLL ---")
-
-        employee_id = int(input("Employee ID: "))
-
-        employees = show_employees()
-
-        employee = next(
-            (emp for emp in employees if emp[0] == employee_id),
-            None
-        )
-
-        if employee:
-
-            basic_salary = employee[3]
-
-            month = input("Month (e.g. November): ")
-            year = int(input("Year: "))
-
-            hra = float(input("HRA (Enter 0 if none): ") or 0)
-            allowances = float(input("Other Allowances (Enter 0 if none): ") or 0)
-            overtime = float(input("Overtime Amount (Enter 0 if none): ") or 0)
-            tax = float(input("Tax Deduction (Enter 0 if none): ") or 0)
-            pf = float(input("PF Deduction (Enter 0 if none): ") or 0)
-            other_deductions = float(input("Other Deductions (Enter 0 if none): ") or 0)
-
-            gross, net = generate_payroll(
-                employee_id,
-                month,
-                year,
-                basic_salary,
-                hra,
-                allowances,
-                overtime,
-                tax,
-                pf,
-                other_deductions
-            )
-
-            print("\nPayroll Generated Successfully!")
-            print("Gross Salary:", gross)
-            print("Net Salary:", net)
-
-        else:
-
-            print("Employee not found.")
-
-    elif choice == "19":
-
-        print("\n--- PAYROLL HISTORY ---")
-
-        records = view_payroll()
-
-        for record in records:
-            print(record)
-
-        if not records:
-            print("No payroll records found.")
-
-    elif choice == "20":
-
-        print("\n--- UPDATE PAYMENT STATUS ---")
-
-        payroll_id = int(input("Payroll ID: "))
-
-        status = input("Payment Status (Paid/Pending): ").strip().title()
-
-        if status in ["Paid", "Pending"]:
-
-            update_payment_status(payroll_id, status)
-
-            print("Payment Status Updated!")
-
-        else:
-
-            print("Invalid status.")
-
-
-    elif choice == "21":
-
-        print("Goodbye")
-
+        print("Goodbye!")
         break
 
     else:
 
-        print("Invalid Choice")
+        print("Invalid choice.")
