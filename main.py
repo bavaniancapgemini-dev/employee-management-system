@@ -4,7 +4,11 @@ from database import (
     show_employees,
     search_employee,
     delete_employee,
-    update_salary
+    update_salary,
+    apply_leave,
+    view_leave_requests,
+    update_leave_status,
+    employee_leave_history
 )
 
 from reports import (
@@ -50,7 +54,11 @@ while True:
     print("11. Export JSON")
     print("12. Top Performer")
     print("13. Dashboard")
-    print("14. Exit")
+    print("14. Apply for Leave")
+    print("15. View Leave Requests")
+    print("16. Approve / Reject Leave")
+    print("17. Employee Leave History")
+    print("18. Exit")
 
     choice = input("Choose: ")
 
@@ -162,6 +170,84 @@ while True:
         print("Top Performer:", top_performer())
 
     elif choice == "14":
+
+        print("\n--- APPLY FOR LEAVE ---")
+
+        employee_id = int(input("Employee ID: "))
+        leave_type = input("Leave Type (Casual/Sick/Earned): ")
+        start_date = input("Start Date (YYYY-MM-DD): ")
+        end_date = input("End Date (YYYY-MM-DD): ")
+        reason = input("Reason: ")
+
+        employees = show_employees()
+
+        if any(employee[0] == employee_id for employee in employees):
+
+            apply_leave(
+                employee_id,
+                leave_type,
+                start_date,
+                end_date,
+                reason
+            )
+
+            print("Leave Application Submitted!")
+
+        else:
+
+            print("Employee ID not found.")
+
+    elif choice == "15":
+
+        print("\n--- ALL LEAVE REQUESTS ---")
+
+        requests = view_leave_requests()
+
+        if requests:
+
+            for request in requests:
+                print(request)
+
+        else:
+
+            print("No leave requests found.")
+
+    elif choice == "16":
+
+        print("\n--- APPROVE / REJECT LEAVE ---")
+
+        leave_id = int(input("Enter Leave Request ID: "))
+
+        status = input("Enter status (Approved/Rejected): ").strip().title()
+
+        if status in ["Approved", "Rejected"]:
+
+            update_leave_status(leave_id, status)
+
+            print("Leave Status Updated!")
+
+        else:
+
+            print("Invalid status.")
+
+    elif choice == "17":
+
+        print("\n--- EMPLOYEE LEAVE HISTORY ---")
+
+        employee_id = int(input("Enter Employee ID: "))
+
+        history = employee_leave_history(employee_id)
+
+        if history:
+
+            for record in history:
+                print(record)
+
+        else:
+
+            print("No leave history found.")
+
+    elif choice == "18":
 
         print("Goodbye")
 
