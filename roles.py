@@ -33,6 +33,7 @@ from performance import (
     employee_performance_history,
     display_department_performance
 )
+from organization import organization_management_menu
 
 from auth import (
     view_accounts,
@@ -179,7 +180,8 @@ def admin_dashboard(user):
         print("14. Create HR / Employee Account")
         print("15. Export Employees")
         print("16. Performance Review Management")
-        print("17. Logout")
+        print("17. Organization Management")
+        print("18. Logout")
 
         choice = input("Choose: ").strip()
 
@@ -382,8 +384,11 @@ def admin_dashboard(user):
 
                 print("Invalid choice.")
 
-
         elif choice == "17":
+
+            organization_management_menu()
+
+        elif choice == "18":
 
             print("Logging out...")
             break
@@ -406,7 +411,8 @@ def hr_dashboard(user):
         print("6. View Payroll")
         print("7. Dashboard Reports")
         print("8. Performance Review Management")
-        print("9. Logout")
+        print("9. Organization Management")
+        print("10. Logout")
 
         choice = input("Choose: ").strip()
 
@@ -483,8 +489,12 @@ def hr_dashboard(user):
             else:
 
                 print("Invalid choice.")
-
+                
         elif choice == "9":
+
+            organization_management_menu()
+
+        elif choice == "10":
 
             print("Logging out...")
             break
