@@ -42,6 +42,7 @@ from auth import (
 
 from performance import create_performance_table
 from organization import create_organization_tables
+from training import create_training_tables
 
 from roles import open_role_dashboard
 
@@ -58,6 +59,7 @@ create_payroll_table()
 create_attendance_table()
 create_performance_table()
 create_organization_tables()
+create_training_tables()
 
 # MAIN LOGIN SYSTEM
 

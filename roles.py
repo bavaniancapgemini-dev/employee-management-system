@@ -33,6 +33,9 @@ from performance import (
     employee_performance_history,
     display_department_performance
 )
+from training import training_management_menu
+from training import display_employee_training_history
+
 from organization import organization_management_menu
 
 from auth import (
@@ -181,7 +184,8 @@ def admin_dashboard(user):
         print("15. Export Employees")
         print("16. Performance Review Management")
         print("17. Organization Management")
-        print("18. Logout")
+        print("18. Training Management")
+        print("19. Logout")
 
         choice = input("Choose: ").strip()
 
@@ -390,6 +394,10 @@ def admin_dashboard(user):
 
         elif choice == "18":
 
+            training_management_menu()
+
+        elif choice == "19":
+
             print("Logging out...")
             break
 
@@ -412,7 +420,8 @@ def hr_dashboard(user):
         print("7. Dashboard Reports")
         print("8. Performance Review Management")
         print("9. Organization Management")
-        print("10. Logout")
+        print("10. Training Management")
+        print("11. Logout")
 
         choice = input("Choose: ").strip()
 
@@ -496,6 +505,10 @@ def hr_dashboard(user):
 
         elif choice == "10":
 
+            training_management_menu()
+
+        elif choice == "11":
+
             print("Logging out...")
             break
 
@@ -514,7 +527,8 @@ def employee_dashboard(user):
         print("3. Apply for Leave")
         print("4. View My Leave History")
         print("5. View My Performance Reviews")
-        print("6. Logout")
+        print("6. View My Training History")
+        print("7. Logout")
 
         choice = input("Choose: ").strip()
 
@@ -614,8 +628,11 @@ def employee_dashboard(user):
             else:
 
                 print("No performance reviews found.")
-
+                
         elif choice == "6":
+            display_employee_training_history(user["employee_id"])
+
+        elif choice == "7":
 
             print("Logging out...")
             break
