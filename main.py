@@ -11,6 +11,13 @@ from database import (
     employee_leave_history
 )
 
+from payroll import (
+    create_payroll_table,
+    generate_payroll,
+    view_payroll,
+    update_payment_status
+)
+
 from reports import (
     highest_salary,
     average_salary,
@@ -31,6 +38,8 @@ from utils import line
 
 
 create_table()
+
+create_payroll_table()
 
 
 while True:
@@ -58,7 +67,10 @@ while True:
     print("15. View Leave Requests")
     print("16. Approve / Reject Leave")
     print("17. Employee Leave History")
-    print("18. Exit")
+    print("18. Generate Payroll")
+    print("19. View Payroll")
+    print("20. Update Payment Status")
+    print("21. Exit")
 
     choice = input("Choose: ")
 
@@ -246,8 +258,87 @@ while True:
         else:
 
             print("No leave history found.")
-
+            
     elif choice == "18":
+
+        print("\n--- GENERATE PAYROLL ---")
+
+        employee_id = int(input("Employee ID: "))
+
+        employees = show_employees()
+
+        employee = next(
+            (emp for emp in employees if emp[0] == employee_id),
+            None
+        )
+
+        if employee:
+
+            basic_salary = employee[3]
+
+            month = input("Month (e.g. November): ")
+            year = int(input("Year: "))
+
+            hra = float(input("HRA (Enter 0 if none): ") or 0)
+            allowances = float(input("Other Allowances (Enter 0 if none): ") or 0)
+            overtime = float(input("Overtime Amount (Enter 0 if none): ") or 0)
+            tax = float(input("Tax Deduction (Enter 0 if none): ") or 0)
+            pf = float(input("PF Deduction (Enter 0 if none): ") or 0)
+            other_deductions = float(input("Other Deductions (Enter 0 if none): ") or 0)
+
+            gross, net = generate_payroll(
+                employee_id,
+                month,
+                year,
+                basic_salary,
+                hra,
+                allowances,
+                overtime,
+                tax,
+                pf,
+                other_deductions
+            )
+
+            print("\nPayroll Generated Successfully!")
+            print("Gross Salary:", gross)
+            print("Net Salary:", net)
+
+        else:
+
+            print("Employee not found.")
+
+    elif choice == "19":
+
+        print("\n--- PAYROLL HISTORY ---")
+
+        records = view_payroll()
+
+        for record in records:
+            print(record)
+
+        if not records:
+            print("No payroll records found.")
+
+    elif choice == "20":
+
+        print("\n--- UPDATE PAYMENT STATUS ---")
+
+        payroll_id = int(input("Payroll ID: "))
+
+        status = input("Payment Status (Paid/Pending): ").strip().title()
+
+        if status in ["Paid", "Pending"]:
+
+            update_payment_status(payroll_id, status)
+
+            print("Payment Status Updated!")
+
+        else:
+
+            print("Invalid status.")
+
+
+    elif choice == "21":
 
         print("Goodbye")
 
