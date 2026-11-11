@@ -216,3 +216,110 @@ Bavani.Ch
 
 GitHub:
 https://github.com/bavaniancapgemini-dev
+
+
+## Version 8.0 – Recruitment & Onboarding Management
+
+Added a complete recruitment and onboarding module.
+
+### Job Opening Management
+- Add, view, search and update job openings.
+- Manage vacancies and job status.
+- Close job openings.
+
+### Candidate Management
+- Register candidates.
+- Search, update and delete candidate records.
+- Store candidate skills, experience and resume paths.
+
+### Job Application Tracking
+- Apply candidates for available jobs.
+- Track application statuses.
+- Prevent duplicate applications.
+
+### Interview Management
+- Schedule interviews.
+- Record interviewer details and feedback.
+- Track interview results.
+- Automatically update application status.
+
+### Offer Management
+- Create job offers.
+- Manage offered salary and joining dates.
+- Accept or decline offers.
+- Update application status based on offer decisions.
+
+### Onboarding Management
+- Convert candidates with accepted offers into employees.
+- Prevent duplicate candidate-to-employee conversion.
+- Create onboarding tasks.
+- Track task progress.
+- View onboarding completion summaries.
+
+### Database Tables
+- job_openings
+- candidates
+- job_applications
+- interviews
+- recruitment_offers
+- onboarding_tasks
+- candidate_employee_links
+
+### Dashboard Integration
+- Added Recruitment & Onboarding Management to Admin Dashboard.
+- Added Recruitment & Onboarding Management to HR Manager Dashboard.
+
+Version 8.0 expands the system into a more complete employee lifecycle management application.
+
+
+## Version 9.0 – Advanced HR Analytics & Reporting
+
+### New Features
+
+- Employee KPI dashboard
+- Department-wise employee analytics
+- Recruitment KPI dashboard
+- Application status and interview analytics
+- Hiring conversion analysis
+- Attendance analytics
+- Employee-wise attendance reports
+- Leave management analytics
+- Payroll cost analysis
+- Monthly and yearly payroll reports
+- Department-wise payroll expenses
+- Salary component analysis
+- Training completion analytics
+- Course-wise training reports
+- Performance rating analytics
+- Department performance comparisons
+- Advanced HR Analytics dashboard
+- CSV report exports
+- Master export for all analytics reports
+- Admin and HR dashboard integration
+
+### CSV Reports
+
+The system can export the following reports:
+
+1. Employee Analytics
+2. Recruitment Analytics
+3. Attendance Analytics
+4. Leave Analytics
+5. Payroll Analytics
+6. Training Analytics
+7. Performance Analytics
+
+All reports are saved in the `exports` folder and can be opened in Microsoft Excel.
+
+### Technologies Used
+
+- Python
+- SQLite
+- SQL
+- CSV
+- VS Code
+- Git and GitHub
+
+### Project Version
+
+**Current Version: 9.0**

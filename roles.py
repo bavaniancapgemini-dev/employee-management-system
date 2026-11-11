@@ -38,6 +38,7 @@ from training import display_employee_training_history
 
 from organization import organization_management_menu
 from recruitment import recruitment_management_menu
+from analytics import advanced_analytics_menu
 
 from auth import (
     view_accounts,
@@ -187,7 +188,8 @@ def admin_dashboard(user):
         print("17. Organization Management")
         print("18. Training Management")
         print("19. Recruitment & Onboarding Management")
-        print("20. Logout")
+        print("20. Advanced HR Analytics")
+        print("21. Logout")
 
         choice = input("Choose: ").strip()
 
@@ -404,6 +406,10 @@ def admin_dashboard(user):
 
         elif choice == "20":
 
+            advanced_analytics_menu()
+
+        elif choice == "21":
+
             print("Logging out...")
             break
 
@@ -428,7 +434,8 @@ def hr_dashboard(user):
         print("9. Organization Management")
         print("10. Training Management")
         print("11. Recruitment & Onboarding Management")
-        print("12. Logout")
+        print("12. Advanced HR Analytics")
+        print("13. Logout")
 
         choice = input("Choose: ").strip()
 
@@ -517,8 +524,12 @@ def hr_dashboard(user):
         elif choice == "11":
 
             recruitment_management_menu()
-
+            
         elif choice == "12":
+
+            advanced_analytics_menu()
+
+        elif choice == "13":
 
             print("Logging out...")
             break
