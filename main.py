@@ -43,6 +43,7 @@ from auth import (
 from performance import create_performance_table
 from organization import create_organization_tables
 from training import create_training_tables
+from recruitment import create_recruitment_tables
 
 from roles import open_role_dashboard
 
@@ -51,7 +52,9 @@ from utils import line
 from getpass import getpass
 
 
-# INITIALIZE DATABASE
+# ==========================================
+# INITIALIZE DATABASE TABLES
+# ==========================================
 
 create_table()
 create_auth_table()
@@ -60,8 +63,12 @@ create_attendance_table()
 create_performance_table()
 create_organization_tables()
 create_training_tables()
+create_recruitment_tables()
 
+
+# ==========================================
 # MAIN LOGIN SYSTEM
+# ==========================================
 
 while True:
 
@@ -74,7 +81,7 @@ while True:
     print("1. Login")
     print("2. Exit")
 
-    choice = input("Choose: ")
+    choice = input("Choose: ").strip()
 
     if choice == "1":
 
